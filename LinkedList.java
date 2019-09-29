@@ -81,12 +81,12 @@ public class LinkedList
 		}
 		else if(index == 0)
 		{
-			System.out.println("Removing ListElement number " + index + " from LinkedList.");
+			System.out.println("Removed ListElement number " + index + " from LinkedList.");
 			head = head.getNext();
 		}			
 		else
 		{
-			System.out.println("Removing ListElement number " + index + " from LinkedList.");
+			System.out.println("Removed ListElement number " + index + " from LinkedList.");
 			ListElement temp = this.head;
 			int i = 0;
 			while(i < index - 1)
@@ -139,26 +139,92 @@ public class LinkedList
 	public static void main(String[] args)
 	{
 		LinkedList myList = new LinkedList();
-		ListElement le = new ListElement();
-
-		le.setData(5);
-		
-		myList.addElement(le);
-
-		myList.printLinkedListHead();
-		myList.deleteElement(3);
-		myList.printLinkedListHead();
-		
+			
 		char userIn = ' ';
+		char QUIT = ' ';
 		Scanner UserInput = new Scanner(System.in);
-		while(true)
+		while(QUIT == ' ')
 		{
 			userIn = ' ';
-			System.out.println("Linked List operations:");
+			System.out.println("\nLinked List operations:");
 			System.out.println("a - add a new ListElement to the linked list.");
 			System.out.println("d - delete a ListElement from the linked list.");
+			System.out.println("r - retrieve a ListElement from the linked list.");
 			System.out.println("p - print the linked list.");
+			System.out.println("q - quit. \n");
+			
 			userIn = UserInput.nextLine().charAt(0);
+			
+			switch(userIn)
+			{
+				case 'a':case 'A':
+				{
+					System.out.println("Enter a value to be put into the LinkedList:");
+					int toAdd = 0;
+					try
+					{	
+						toAdd = Integer.parseInt(UserInput.nextLine());
+					}
+					catch (NumberFormatException e)
+					{
+						System.out.println("Invalid input, data must be an integer.");
+						break;
+					}
+					ListElement le = new ListElement();
+					le.setData(toAdd);
+					myList.addElement(le);
+					break;
+				}
+				case 'd':case 'D':
+				{
+					System.out.println("Enter the index value of the ListElement to be deleted:");
+					int toRemove = 0;
+					try
+					{	
+						toRemove = Integer.parseInt(UserInput.nextLine());
+					}
+					catch (NumberFormatException e)
+					{
+						System.out.println("Invalid input, data must be an integer.");
+						break;
+					}
+					myList.deleteElement(toRemove);
+					break;
+				}
+				case 'r':case 'R':
+				{
+					
+					System.out.println("Enter the index value of the ListElement to be retrieved:");
+					int toRetrieve = 0;
+					try
+					{	
+						toRetrieve = Integer.parseInt(UserInput.nextLine());
+					}
+					catch (NumberFormatException e)
+					{
+						System.out.println("Invalid input, data must be an integer.");
+						break;
+					}
+					System.out.println(myList.getElement(toRetrieve).getData());
+					break;
+				}
+				case 'p':case 'P':
+				{
+					myList.printLinkedListHead();
+					break;
+				}
+				case 'q': case 'Q':
+				{
+					QUIT = 'y';
+					break;
+				}				
+				default:
+				{
+					System.out.println("Invalid input, try one of the listed options.");
+					break;
+				}
+				
+			}
 		}
 	}
 }

@@ -4,6 +4,13 @@ public class ListElement
 	private ListElement prev;
 	private int data;
 	
+	public ListElement()
+	{
+		this.next = null;
+		this.prev = null;
+		data = 0;
+	}
+	
 	public void setNext(ListElement NEXT)
 	{
 		this.next = NEXT;
@@ -31,7 +38,7 @@ public class ListElement
 		return this.prev;
 	}
 	
-	public getData()
+	public int getData()
 	{
 		return this.data;
 	}

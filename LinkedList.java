@@ -2,7 +2,8 @@ import java.util.Scanner;  // Import the Scanner class for user input
 
 public class LinkedList
 {
-	ListElement head = new ListElement();
+	ListElement head = null;
+	ListElement tail = null;
 	int numNodes = 0;
 	
 	// Purpose: add an element to the linked list
@@ -18,16 +19,19 @@ public class LinkedList
 		if(numNodes == 0)
 		{
 			head = le;
+			tail = head;
+			head.setPrev(null);
+			head.setNext(null);
 			numNodes++;
 		}
 		else
 		{
-			ListElement temp = this.head;
-			while(temp.getNext() != null)
-			{
-				temp = temp.getNext();
-			}
-			temp.setNext(le);
+			ListElement temp = tail; // temp is last ListElement
+			temp.setNext(le); // tail.next = le
+			temp = temp.getNext(); 
+			temp.setPrev(tail);
+			temp.setNext(null);
+			tail = temp;
 			numNodes++;
 		}
 		return;
@@ -50,7 +54,7 @@ public class LinkedList
 		}
 		else
 		{
-			ListElement temp = this.head;
+			ListElement temp = head;
 			int i = 0;
 			while(i < index)
 			{
@@ -83,11 +87,12 @@ public class LinkedList
 		{
 			System.out.println("Removed ListElement number " + index + " from LinkedList.");
 			head = head.getNext();
+			head.setPrev(null);
 		}			
 		else
 		{
 			System.out.println("Removed ListElement number " + index + " from LinkedList.");
-			ListElement temp = this.head;
+			ListElement temp = head;
 			int i = 0;
 			while(i < index - 1)
 			{
@@ -95,24 +100,33 @@ public class LinkedList
 				i++;
 			} 
 			// temp is now the ListElement before the indexed ListElement
-			temp.setNext(temp.getNext().getNext());
+			ListElement tempo = temp.getNext().getNext();
+			tempo.setPrev(temp);
+			temp.setNext(tempo);
 			numNodes--;
 			return;
 		}
 		
 	}
 	
-	// Purpose: 
-	// Parameter(s): 
-	// (1) 
+	// Purpose: Print the ListElement data values of the entire LinkedList in reverse order from tail
+	// Parameter(s): N/A
 	// Precondition(s): 
-	// (1) 
-	// Returns:
+	// (1) LinkedList must not be empty
+	// Returns: void
 	// Side effect(s): 
-	// (1) 
+	// (1) Prints data values of ListElement to console
 	public void printLinkedListTail()
 	{
-		
+		ListElement temp = tail;
+		int i = numNodes;
+		while(i > 0)
+		{
+			System.out.print(temp.getData() + "  ");
+			temp = temp.getPrev();
+			i--;
+		}
+		System.out.println(" ");
 	}
 	
 	// Purpose: Print the ListElement data values of the entire LinkedList in order from head
@@ -124,7 +138,7 @@ public class LinkedList
 	// (1) Prints data values of ListElement to console
 	public void printLinkedListHead()
 	{
-		ListElement temp = this.head;
+		ListElement temp = head;
 		int i = 0;
 		while(i < numNodes)
 		{
@@ -210,7 +224,28 @@ public class LinkedList
 				}
 				case 'p':case 'P':
 				{
-					myList.printLinkedListHead();
+					System.out.println("h - print list from head");
+					System.out.println("t - print list from tail");
+					userIn = UserInput.nextLine().charAt(0);
+					switch(userIn)
+					{
+						case 'h': case'H':
+						{
+							myList.printLinkedListHead();
+							break;
+						}
+						case 't': case'T':
+						{
+							myList.printLinkedListTail();
+							break;
+						}
+						default:
+						{
+							System.out.println("Invalid input, try one of the listed options.");
+							break;
+						}
+						
+					}					
 					break;
 				}
 				case 'q': case 'Q':

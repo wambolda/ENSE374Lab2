@@ -3,7 +3,7 @@ public class LinkedList
 	ListElement head = new ListElement();
 	int numNodes = 0;
 	
-	public void addNode(ListElement le)
+	public void addElement(ListElement le)
 	{
 		if(numNodes == 0)
 		{
@@ -25,10 +25,25 @@ public class LinkedList
 	
 	public ListElement getElement(int index)
 	{
-		
+		if(index > numNodes)
+		{
+			ListElement temp = new ListElement();
+			return temp;
+		}
+		else
+		{
+			ListElement temp = this.head;
+			int i = 0;
+			while(i < index)
+			{
+				temp = temp.getNext();
+				i++;
+			}
+			return temp;
+		}
 	}
 	
-	public ListElement deleteElement(int index)
+	//public ListElement deleteElement(int index)
 	{
 		
 	}
@@ -46,8 +61,14 @@ public class LinkedList
 
 	public static void main(String[] args)
 	{
+		LinkedList myList = new LinkedList();
 		ListElement le = new ListElement();
+		ListElement le_two = new ListElement();
 		le.setData(5);
-		//LinkedList myList = new LinkedList();
+		le_two.setData(9);
+		
+		myList.addElement(le);
+		myList.addElement(le_two);
+		System.out.println(myList.getElement(0).getData());
 	}
 }
